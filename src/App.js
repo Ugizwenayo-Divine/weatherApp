@@ -3,13 +3,13 @@ import { HashRouter, Route } from 'react-router-dom';
 import Landing from './components/pages/Landing';
 import NavBar from './components/layout/NavBar';
 import Signup from './components/pages/Signup';
+import Login from './components/pages/Login';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/index.css';
 
 class App extends Component {
-  
     state={
-        users:[]
+        users:[],
     };
     handleSubmit = user =>{
         this.setState({users: [...this.state.users, user]})
@@ -28,6 +28,11 @@ class App extends Component {
       exact
       path="/signup"
     component={()=>(<Signup myFunc={this.handleSubmit}/>)}
+    /> 
+        <Route
+      exact
+      path="/login"
+      component={Login}
     />
   </HashRouter>)}
 };

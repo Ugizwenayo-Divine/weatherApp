@@ -151,7 +151,7 @@ class Signup extends Component {
               </div>
               <input type='button' onClick={this.submitForm} value="Signup"/>
             </form>
-            <Link to="/" id="link" className="goTo">Already have an account</Link>
+            <Link to="/login" id="link" className="goTo">Already have an account</Link>
           </div>
         </div>
       </div>
