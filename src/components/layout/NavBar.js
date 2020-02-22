@@ -12,7 +12,7 @@ class NavBar extends Component {
       <div className="container">
         <ul>
           <li><Link id="home" className="navList" to="/">HOME</Link></li>
-          <li><Link id="signup" className="navList" to="/#">SIGNUP</Link></li>
+          <li><Link id="signup" className="navList" to="/Signup">SIGNUP</Link></li>
           <li><Link id="login" className="navList" to="/#">LOGIN</Link></li>
         </ul>
       </div>
