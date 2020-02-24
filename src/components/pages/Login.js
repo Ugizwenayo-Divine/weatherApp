@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { loadLocal } from '../../helpers/SignupFunction';
+import NavBar from '../layout/NavBar';
 
 class Login extends Component {
   constructor(props) {
@@ -36,7 +38,7 @@ class Login extends Component {
     }
     if(password.length<8){
         event.preventDefault();
-        this.setState({errors:{password:'password must be greater than 7 characters'}});
+        this.setState({errors:{password:'wrong password'}});
         return;
     }
       const user= loadLocal();
@@ -51,8 +53,12 @@ class Login extends Component {
   }
 
   render() {
+    if(this.state.success===true){
+      return <Redirect to="/currentWeather"/>
+    }
     return (
       <div className="main-body signup">
+        <NavBar page="Login" />
         <div className="wrapper login">
           <div className="wrapper-head">
             <h1>LOGIN</h1>
@@ -69,7 +75,7 @@ class Login extends Component {
                   placeholder="Email"
                   onChange={this.handleLoginChange}
 
-                />{this.state.errors.email}
+                /><span>{this.state.errors.email}</span>
               </div>
               <div className="field-container">
                 <input
@@ -81,9 +87,9 @@ class Login extends Component {
                   placeholder="Password"
                   onChange={this.handleLoginChange}
 
-                />{this.state.errors.password}
+                /><span>{this.state.errors.password}</span>
               </div>
-              {this.state.errors.notUser}
+              <span>{this.state.errors.notUser}</span>
               <input type="button" onClick={this.submitForm} value="Login" />
             </form>
             <Link to="/signup" id="link" className="goTo">Create an account</Link>

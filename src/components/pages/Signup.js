@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import {Redirect} from 'react-router-dom';
 import {storeLocal, loadLocal} from '../../helpers/SignupFunction';
+import NavBar from '../layout/NavBar';
 
 class Signup extends Component {
   constructor(props) {
@@ -11,6 +13,7 @@ class Signup extends Component {
       email: '',
       password: '',
       confirm: '',
+      success:false,
       errors:{
           firstName:'',
           lastName:'',
@@ -27,18 +30,6 @@ class Signup extends Component {
       this.setState(retrieved);
      }
    }
-   componentDidUpdate(prevProps, prevState) {
-     let user={
-       firstName:this.state.firstName,
-       lastName:this.state.lastName,
-       email:this.state.email,
-       password:this.state.password,
-     }
-    if (prevState !== this.state) {
-        console.log(prevState,this.state);
-     storeLocal(user);
-    }
-   }
 
   handleChange = (event) => {
     const { name, value } = event.target
@@ -54,37 +45,41 @@ class Signup extends Component {
       let password = this.state.password;
       let email = this.state.email;
       let confirm= this.state.confirm;
-      if(firstName.length <3){
+
+      if(firstName.length < 3){
           event.preventDefault();
         this.setState({errors:{firstName:'First name must have above 3 characters'}});
         return;
       }
-      if(lastName.length<3){
+      if(lastName.length < 3){
         event.preventDefault();
       this.setState({errors:{lastName:'Last name must have above 3 characters'}});
       return;
     }
-    if(email.length===0 || !(new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(email))){
+      if(email.length === 0 || !(new RegExp(/[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}/g).test(email))){
         event.preventDefault();
         this.setState({errors:{email:'Invalid email'}});
         return; 
     }
-    if(password!==confirm || password.length<8){
+      if(password!==confirm || password.length<8){
         event.preventDefault();
         this.setState({errors:{password:'password must match confirm and greater 7 characters'}});
         return;
     }
-    this.setState({errors:{firstName:'',lastName:'',email:'',password:''}});
-    this.props.myFunc(this.state);
+    storeLocal(this.state);
     this.setState(this.initialState);
-    console.log('tired',this.state);
-    
+    this.setState({success:true});
   }
 
   render() {
     const { firstName, lastName, email } = this.state;
+    console.log(this.state.success);
+    if(this.state.success===true){
+      return <Redirect to="/currentWeather"/>
+    }
     return (
       <div className="main-body signup">
+        <NavBar page="Signup" />
         <div className="wrapper">
           <div className="wrapper-head">
             <h1>SIGNUP</h1>
@@ -101,7 +96,7 @@ class Signup extends Component {
                   placeholder="FirstName"
                   value={firstName}
                   onChange={this.handleChange}
-                />{this.state.errors.firstName}
+                /><span>{this.state.errors.firstName}</span>
               </div>
               <div className="field-container">
                 <input
@@ -113,7 +108,7 @@ class Signup extends Component {
                   placeholder="LastName"
                   value={lastName}
                   onChange={this.handleChange}
-                />{this.state.errors.lastName}
+                /><span>{this.state.errors.lastName}</span>
               </div>
               <div className="field-container">
                 <input
@@ -125,7 +120,7 @@ class Signup extends Component {
                   placeholder="Email"
                   value={email}
                   onChange={this.handleChange}
-                />{this.state.errors.email}
+                /><span>{this.state.errors.email}</span>
               </div>
               <div className="field-container">
                 <input
@@ -136,7 +131,7 @@ class Signup extends Component {
                   required
                   placeholder="Password"
                   onChange={this.handleChange}
-                />{this.state.errors.password}
+                /><span>{this.state.errors.password}</span>
               </div>
               <div className="field-container">
                 <input

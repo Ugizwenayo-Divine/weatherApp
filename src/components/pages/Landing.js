@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import WeatherIcon from 'react-open-weather-icons';
 import { today, weather } from '../../helpers/LandFunction';
+import NavBar from '../layout/NavBar';
 
 class Landing extends Component {
   constructor(props) {
@@ -21,14 +22,15 @@ class Landing extends Component {
     }
     return (
       <div className="main-body">
+        <NavBar page="Landing" />
         <p id="des">WEATHER APP</p>
         <p id="day">
           {day}
           {' '}
-|
+          |
           {' '}
           {kel}
-°
+          °
         </p>
         <WeatherIcon name={weatherInfo ? weatherInfo.weather[0].icon : ''} className="my-awesome-icon" />
       </div>
