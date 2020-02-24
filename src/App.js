@@ -1,16 +1,20 @@
 import React,{Component} from 'react';
 import { HashRouter, Route } from 'react-router-dom';
 import Landing from './components/pages/Landing';
-import NavBar from './components/layout/NavBar';
 import Signup from './components/pages/Signup';
 import Login from './components/pages/Login';
+import CurrentWeather from './components/pages/CurrentWeather';
+import ForecastWeather from './components/pages/ForecastWeather';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/index.css';
 
 class App extends Component {
-    state={
-        users:[],
-    };
+  constructor(props){
+    super(props);
+    this.state={
+      users:[],
+  };
+  }
     handleSubmit = user =>{
         this.setState({users: [...this.state.users, user]})
     }
@@ -18,7 +22,7 @@ class App extends Component {
         console.log('Appstate', this.state.users);
         return(
   <HashRouter>
-    <NavBar />
+    
     <Route
       exact
       path="/"
@@ -34,6 +38,17 @@ class App extends Component {
       path="/login"
       component={Login}
     />
+                    <Route
+      exact
+      path="/forecastWeather"
+      component={ForecastWeather}
+    />
+            <Route
+      exact
+      path="/currentWeather"
+      component={CurrentWeather}
+    />
+
   </HashRouter>)}
 };
 
